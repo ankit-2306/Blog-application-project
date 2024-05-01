@@ -27,7 +27,7 @@ export default function SignIn() {
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // sending data to backend from formData
       });
       const data = await res.json();
       if (data.success === false) {
@@ -36,7 +36,7 @@ export default function SignIn() {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        navigate('/');
+        navigate('/');                         // navigate to home page
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
@@ -54,7 +54,7 @@ export default function SignIn() {
             Blog
           </Link>
           <p className='text-sm mt-5'>
-            This is a demo project. You can sign in with your email and password
+            This is a MERN daily blog. You can sign in with your email and password
             or with Google.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function SignIn() {
                 'Sign In'
               )}
             </Button>
-            <OAuth />
+            <OAuth />                               
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Dont Have an account?</span>

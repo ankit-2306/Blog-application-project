@@ -7,14 +7,14 @@ import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function OAuth() {
-    const auth = getAuth(app)
+    const auth = getAuth(app)                         // app is file where you configured firefox outh providing api keys etc
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleGoogleClick = async () =>{
-        const provider = new GoogleAuthProvider()
+        const provider = new GoogleAuthProvider()                   // firefox oauth strategy provider just like passport oauth strategy
         provider.setCustomParameters({ prompt: 'select_account' }) // to make Oauth ask for which account to login
         try {
-            const resultsFromGoogle = await signInWithPopup(auth, provider);
+            const resultsFromGoogle = await signInWithPopup(auth, provider); // here you get data from google
             console.log(resultsFromGoogle);
             const res = await fetch('/api/auth/google', {
                 method: 'POST',

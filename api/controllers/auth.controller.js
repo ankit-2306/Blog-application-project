@@ -83,10 +83,10 @@ export const google = async (req, res, next) => {
           httpOnly: true,
         })
         .json(rest);
-    } else {
-      console.log("user not found");
-      const generatedPassword =
-        Math.random().toString(36).slice(-8) +
+    } else {                               // google user doesn't send password so we create random password so that user can change password later
+      // console.log("user not found");
+      const generatedPassword =                     // random password generation random no converted to string base 36(0,1,...,9,a,b,c,...,z )   
+        Math.random().toString(36).slice(-8) +      // then last 8 characters of the strings are taken
         Math.random().toString(36).slice(-8);
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
       const newUser = new User({

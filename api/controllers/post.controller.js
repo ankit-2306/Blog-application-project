@@ -31,21 +31,21 @@ export const getposts = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === 'asc' ? 1 : -1;
-    const posts = await Post.find({
-      ...(req.query.userId && { userId: req.query.userId }),
+    const posts = await Post.find({                                          // stack overflow used for the syntax of this find function
+      ...(req.query.userId && { userId: req.query.userId }),                 // using logical AND and spread operator to set conditions 
       ...(req.query.category && { category: req.query.category }),
       ...(req.query.slug && { slug: req.query.slug }),
       ...(req.query.postId && { _id: req.query.postId }),
       ...(req.query.searchTerm && {
         $or: [
-          { title: { $regex: req.query.searchTerm, $options: 'i' } },
+          { title: { $regex: req.query.searchTerm, $options: 'i' } },       // stack overflow used: to match title 
           { content: { $regex: req.query.searchTerm, $options: 'i' } },
         ],
       }),
     })
       .sort({ updatedAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit);
+      .skip(startIndex)                               // to start getting result from the required index just like ofset in sql
+      .limit(limit);                                  // no. of rows we want to send in result
 
     const totalPosts = await Post.countDocuments();
 
